@@ -1,0 +1,22 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [ main ]
+    
+  # Run workflow manually
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Deploy to Firebase
+        uses: shyam006/PTF-Admin@master
+        with:
+          args: deploy --only hosting
+        env: 
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PTF_ADMIN }}
